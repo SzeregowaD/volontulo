@@ -187,10 +187,15 @@ class UserSerializer(serializers.ModelSerializer):
 
     is_administrator = serializers.SerializerMethodField()
     organizations = serializers.SerializerMethodField()
+    phone_no = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = (
+            'first_name',
+            'last_name',
+            'phone_no',
+            'email',
             'is_administrator',
             'organizations',
             'username',
@@ -204,7 +209,10 @@ class UserSerializer(serializers.ModelSerializer):
     def get_organizations(self, obj):
         """Returns organizations that user belongs to."""
         qs = obj.userprofile.organizations.all()
-        return OrganizationSerializer(qs, many=True, context=self.context).data
+        return OrganizationSerializer(qs, many=True, context=self.context).data\
+
+    def get_phone_no(self, obj):
+        return obj.userprofile.phone_no
 
 
 # pylint: disable=abstract-method
