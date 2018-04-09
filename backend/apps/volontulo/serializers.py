@@ -211,8 +211,9 @@ class UserSerializer(serializers.ModelSerializer):
         qs = obj.userprofile.organizations.all()
         return OrganizationSerializer(qs, many=True, context=self.context).data
 
+    @staticmethod
     def get_phone_no(obj):
-        """Returns user's phone number"""
+        """Returns user's phone number."""
         return obj.userprofile.phone_no
 
 
